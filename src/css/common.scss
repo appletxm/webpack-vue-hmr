@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+img {
+  border: 0;
+}
+
+body {
+  font-size: $font-14;
+  font-family: $font-family;
+}
+
+.c {
+  clear: both;
+}
+
+a {
+  color: $purple;
+  text-decoration: none;
+}
