@@ -26,6 +26,9 @@ module.exports = function (envKeyWord, env) {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
+          options: {
+            fix: true
+          },
           exclude: /node_modules/
         },
         
@@ -101,7 +104,8 @@ module.exports = function (envKeyWord, env) {
         'assets': path.join(__dirname, '../src/assets/'),
         'common': path.join(__dirname, '../src/js/common/'),
         'utils': path.join(__dirname, '../src/js/utils/'),
-        'store': path.join(__dirname, '../src/js/store')
+        'store': path.join(__dirname, '../src/js/store'),
+        'directives': path.join(__dirname, '../src/js/directives')
       }
     },
     plugins: [],

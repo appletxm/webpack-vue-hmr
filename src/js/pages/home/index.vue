@@ -13,6 +13,39 @@
         :label="column.label"
       />
     </el-table>
+
+    <input
+      v-focus:[dynatic].txm="objTest"
+      data-set-list="datalist"
+      class="test-v-focus"
+      value=""
+    />
+
+    <custom-model
+      v-model="testCustomModel"
+      @input="handleInput"
+    ></custom-model>
+
+    <custom-slot :object="objTest">
+      <template
+        slot="header"
+        slot-scope="scope"
+      >
+        <h1>
+          Here might be a page title {{ scope.scopeObject.a }}
+        </h1>
+      </template>
+
+      <p>A paragraph for the main content.</p>
+      <p>And another one.</p>
+
+      <template
+        slot="footer"
+        slot-scope="{footer}"
+      >
+        <p>Here's some contact info {{ footer.name }}</p>
+      </template>
+    </custom-slot>
   </section>
 </template>
 
@@ -20,18 +53,30 @@
 import messager from 'common/messager'
 import eventQueue from 'common/event-queue'
 import { checkUserLogin } from 'common/auth'
+import focus from 'directives/focus'
+import CustomModel from 'components/custom-model'
+import CustomSlot from 'components/custom-slot'
 import models from './models'
 import columns from './columns'
 
 export default {
-  components: {},
+  components: {
+    CustomModel,
+    CustomSlot
+  },
+  directives: {
+    focus
+  },
   data() {
     return {
       columns,
       dataList: [],
       pageSize: 10,
       currentPage: 1,
-      total: 0
+      total: 0,
+      dynatic: 1,
+      objTest: { a: 123, b: { c: 5, d: 9 } },
+      testCustomModel: 9
     }
   },
   computed: {},
@@ -53,6 +98,13 @@ export default {
   },
 
   mounted() {
+    // setInterval(() => {
+    //   this.dynatic = this.dynatic + 1
+    // }, 1000)
+  },
+
+  updated() {
+    console.info('home page updated:', this.testCustomModel)
   },
 
   methods: {
@@ -68,6 +120,10 @@ export default {
       this.dataList = list
       this.total = pagination.total
     }
+
+    // handleInput() {
+    //   debugger
+    // }
   }
 }
 </script>

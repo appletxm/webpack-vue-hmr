@@ -1,4 +1,13 @@
 .#{$prefix}-p-home {
   color: $purple;
   font-size: $font-14;
+
+  .test-v-focus {
+    padding: 5px;
+    display: inline-block;
+
+    &:focus {
+      box-shadow: 5px 0 0 red;
+    }
+  }
 }

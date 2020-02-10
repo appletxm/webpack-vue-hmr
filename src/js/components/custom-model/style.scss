@@ -1,0 +1,21 @@
+.#{$prefix}-c-custom-model {
+  width: 200px;
+  height: 30px;
+  position: relative;
+  margin: 10px 0;
+
+  &:focus {
+    box-shadow: 0 0 10px red;
+  }
+
+  input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border: 1px solid #f0f0f0;
+  }
+}
