@@ -21,12 +21,21 @@
       value=""
     />
 
+    <div id="test-compile-render"></div>
+
+    <render-component></render-component>
+
+    <header-view></header-view>
+
     <custom-model
       v-model="testCustomModel"
       @input="handleInput"
     ></custom-model>
 
-    <custom-slot :object="objTest">
+    <custom-slot
+      v-my-directive="8"
+      :object="objTest"
+    >
       <template
         slot="header"
         slot-scope="scope"
@@ -43,7 +52,11 @@
         slot="footer"
         slot-scope="{footer}"
       >
-        <p>Here's some contact info {{ footer.name }}</p>
+        <p>
+          Here's some contact info {{ footer.name }} <button @click="$pluginMethod">
+            click
+          </button>
+        </p>
       </template>
     </custom-slot>
   </section>
@@ -56,13 +69,18 @@ import { checkUserLogin } from 'common/auth'
 import focus from 'directives/focus'
 import CustomModel from 'components/custom-model'
 import CustomSlot from 'components/custom-slot'
+import compileRender from 'components/compile-render'
+import RenderComponent from 'components/render-component'
+import { HeaderView } from 'components/render-component/test'
 import models from './models'
 import columns from './columns'
 
 export default {
   components: {
     CustomModel,
-    CustomSlot
+    CustomSlot,
+    RenderComponent,
+    HeaderView
   },
   directives: {
     focus
@@ -101,6 +119,9 @@ export default {
     // setInterval(() => {
     //   this.dynatic = this.dynatic + 1
     // }, 1000)
+    // console.info('=====', Vue.myGlobalMethod)
+    // console.info('compileRender:', compileRender, document.querySelector('#test-compile-render'))
+    compileRender.$mount('#test-compile-render')
   },
 
   updated() {
