@@ -1,7 +1,7 @@
 <template>
   <section :class="[$store.state.appPrefix + '-p-home']">
     <h1>Congratulations!</h1>
-    Hey man you did it successful!
+    Hey man you did it successful! {{ provideVal.val }}
     <el-table
       :data="dataList"
       style="width: 100%"
@@ -23,14 +23,46 @@
 
     <div id="test-compile-render"></div>
 
-    <render-component></render-component>
+    <render-component
+      txm="true"
+      placehoder="请输入"
+      :columns="columns"
+    >
+      <template
+        slot="top"
+      >
+        <div slot="top">
+          render top
+        </div>
+      </template>
 
-    <header-view></header-view>
+      <span>render content</span>
+
+      <div slot="foot">
+        render foot
+      </div>
+    </render-component>
+
+    <render-jsx
+      txm1="111"
+      txm2="2222"
+      @my-click="handleMyClick"
+    >
+      <template
+        slot="header"
+      >
+        <h2>render jsx second header</h2>
+        render jsx content
+      </template>
+    </render-jsx>
 
     <custom-model
       v-model="testCustomModel"
       @input="handleInput"
     ></custom-model>
+
+    <observer-component />
+    <Observer-component-appy />
 
     <custom-slot
       v-my-directive="8"
@@ -59,6 +91,16 @@
         </p>
       </template>
     </custom-slot>
+
+    <div id="props-data-test"></div>
+
+    <div id="render-error-test"></div>
+
+    <button @click="handleClick">
+      mixins/extends click
+    </button>
+
+    <provide-component />
   </section>
 </template>
 
@@ -71,7 +113,14 @@ import CustomModel from 'components/custom-model'
 import CustomSlot from 'components/custom-slot'
 import compileRender from 'components/compile-render'
 import RenderComponent from 'components/render-component'
-import { HeaderView } from 'components/render-component/test'
+import RenderJsx from 'components/render-jsx'
+import ObserverComponent from 'components/observer-component'
+import ObserverComponentAppy from 'components/observer-component/apply'
+import propsDataVm from 'components/component-props-data'
+import renderError from 'components/render-error'
+import ProvideComponent from 'components/provide-component'
+import mixinsTest from 'mixins/test'
+import extendsTest from 'extends'
 import models from './models'
 import columns from './columns'
 
@@ -80,11 +129,16 @@ export default {
     CustomModel,
     CustomSlot,
     RenderComponent,
-    HeaderView
+    RenderJsx,
+    ObserverComponent,
+    ObserverComponentAppy,
+    ProvideComponent
   },
   directives: {
     focus
   },
+  extends: extendsTest,
+  mixins: [mixinsTest],
   data() {
     return {
       columns,
@@ -97,6 +151,9 @@ export default {
       testCustomModel: 9
     }
   },
+  inject: [
+    'provideVal'
+  ],
   computed: {},
 
   watch: {},
@@ -113,15 +170,19 @@ export default {
       needKeep: true,
       triggerUrl: ['/', '/home']
     })
+    console.info('=====home page created====', this.mm)
   },
 
   mounted() {
+    // console.info('====home page mounted=====', this.$children, this.$root, this.$parent)
     // setInterval(() => {
     //   this.dynatic = this.dynatic + 1
     // }, 1000)
     // console.info('=====', Vue.myGlobalMethod)
     // console.info('compileRender:', compileRender, document.querySelector('#test-compile-render'))
     compileRender.$mount('#test-compile-render')
+    propsDataVm.$mount('#props-data-test')
+    renderError.$mount('#render-error-test')
   },
 
   updated() {
@@ -140,6 +201,13 @@ export default {
       const { data: { list, pagination } } = res
       this.dataList = list
       this.total = pagination.total
+    },
+    handleClick() {
+      console.info('*******home page click')
+    },
+
+    handleMyClick() {
+      console.info('*******render component event my click')
     }
 
     // handleInput() {

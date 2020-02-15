@@ -18,6 +18,7 @@
 </template>
 
 <script>
+/* global Vue */
 import navigator from 'components/navigator'
 import userLogin from 'components/user-login'
 import {
@@ -32,6 +33,10 @@ import {
   runEventQueue
 } from './models'
 
+const state = Vue.observable({
+  val: 9
+})
+
 export default {
   components: {
     navigator,
@@ -43,6 +48,14 @@ export default {
       dialogVisible: true
     }
   },
+  provide() {
+    return {
+      provideVal: state
+    }
+  },
+  // provide: {
+  //   provideVal: state
+  // },
   watch: {
     // '$store.state.needShowLoginPop'(val) {
     //   console.info('====', val)
@@ -56,7 +69,11 @@ export default {
       this.isPopLoginShow = true
     }
   },
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      state.val = 10
+    }, 2000)
+  },
   methods: {
     closeLoginCb() {
       this.isPopLoginShow = false
