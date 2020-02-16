@@ -134,6 +134,8 @@
         <span>999999999999</span>
       </template>
     </render-component-c>
+
+    <render-menu :tree="tree"></render-menu>
   </section>
 </template>
 
@@ -158,6 +160,7 @@ import mixinsTest from 'mixins/test'
 import TreeComponent from 'components/tree-component'
 import TransitionComponent from 'components/transition-component'
 import RenderComponentC from 'components/render-component-c'
+import RenderMenu from 'components/render-menu'
 import extendsTest from 'extends'
 import models from './models'
 import columns from './columns'
@@ -202,7 +205,8 @@ export default {
     NameSlot,
     TreeComponent,
     TransitionComponent,
-    RenderComponentC
+    RenderComponentC,
+    RenderMenu
   },
   directives: {
     focus
