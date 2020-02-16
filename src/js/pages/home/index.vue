@@ -128,6 +128,12 @@
     <tree-component :tree="tree" />
 
     <transition-component />
+
+    <render-component-c :text="txm33">
+      <template v-slot:content>
+        <span>999999999999</span>
+      </template>
+    </render-component-c>
   </section>
 </template>
 
@@ -151,6 +157,7 @@ import NameSlot from 'components/name-slot'
 import mixinsTest from 'mixins/test'
 import TreeComponent from 'components/tree-component'
 import TransitionComponent from 'components/transition-component'
+import RenderComponentC from 'components/render-component-c'
 import extendsTest from 'extends'
 import models from './models'
 import columns from './columns'
@@ -194,7 +201,8 @@ export default {
     ComponentEvent,
     NameSlot,
     TreeComponent,
-    TransitionComponent
+    TransitionComponent,
+    RenderComponentC
   },
   directives: {
     focus
