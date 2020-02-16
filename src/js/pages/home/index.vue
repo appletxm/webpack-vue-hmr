@@ -101,6 +101,33 @@
     </button>
 
     <provide-component />
+
+    <h1>Component Event Test</h1>
+    <component-event
+      v-model="checked"
+      :label="'pleade checked:'"
+      @focus="handleFocus"
+      @my-event="handleMyClick"
+    ></component-event>
+
+    <name-slot>
+      <template #header="{extra}">
+        <h1>Here might be a page title {{ extra.header }}</h1>
+      </template>
+
+      <template #default>
+        <p>A paragraph for the main content.</p>
+        <p>And another one.</p>
+      </template>
+
+      <template v-slot:footer>
+        <p>Here's some contact info</p>
+      </template>
+    </name-slot>
+
+    <tree-component :tree="tree" />
+
+    <transition-component />
   </section>
 </template>
 
@@ -119,10 +146,41 @@ import ObserverComponentAppy from 'components/observer-component/apply'
 import propsDataVm from 'components/component-props-data'
 import renderError from 'components/render-error'
 import ProvideComponent from 'components/provide-component'
+import ComponentEvent from 'components/component-event'
+import NameSlot from 'components/name-slot'
 import mixinsTest from 'mixins/test'
+import TreeComponent from 'components/tree-component'
+import TransitionComponent from 'components/transition-component'
 import extendsTest from 'extends'
 import models from './models'
 import columns from './columns'
+
+const tree = [
+  {
+    id: '0',
+    name: 'tree-0',
+    children: [
+      {
+        id: '0-0',
+        name: 'tree-0-0',
+        children: [
+          {
+            id: '0-0-0',
+            name: 'tree-0-0-0'
+          },
+          {
+            id: '0-0-1',
+            name: 'tree-0-0-1'
+          }
+        ]
+      },
+      {
+        id: '0-1',
+        name: 'tree-0-1'
+      }
+    ]
+  }
+]
 
 export default {
   components: {
@@ -132,7 +190,11 @@ export default {
     RenderJsx,
     ObserverComponent,
     ObserverComponentAppy,
-    ProvideComponent
+    ProvideComponent,
+    ComponentEvent,
+    NameSlot,
+    TreeComponent,
+    TransitionComponent
   },
   directives: {
     focus
@@ -148,7 +210,9 @@ export default {
       total: 0,
       dynatic: 1,
       objTest: { a: 123, b: { c: 5, d: 9 } },
-      testCustomModel: 9
+      testCustomModel: 9,
+      checked: false,
+      tree
     }
   },
   inject: [
@@ -208,6 +272,10 @@ export default {
 
     handleMyClick() {
       console.info('*******render component event my click')
+    },
+
+    handleFocus(e) {
+      console.info('home page focus e:', e)
     }
 
     // handleInput() {
